@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 import  articles from "./article-content";
 import NotFound from "./NotFound";
 import axios from 'axios';
-import CommentsListComponent from "../components/CommentsListComponent";
+import CommentsListComponent from "./../components/CommentsListComponent";
+import AddCommentForm from './../components/AddCommentForm';
+
 
 const Article = () => {
     const {articleId} = useParams();
@@ -17,6 +19,7 @@ const Article = () => {
             setArticleInfo(newArticleInfo);
         }
         loadArticleInfo();
+        console.log(articleInfo);
     },[]);
 
     const addUpVote = async () => {
@@ -40,7 +43,8 @@ const Article = () => {
         {article.content.map(
             (paragraph,i)=>(<p key={i}>{paragraph}</p>
             ))}
-        <CommentsListComponent comments={articleInfo.comments}/>
+        <AddCommentForm articleName={articleId} onUpdatedArticle={updatedArticle=>setArticleInfo(updatedArticle)}/>
+        <CommentsListComponent comments={articleInfo.comments} />
         </>
 
     )
